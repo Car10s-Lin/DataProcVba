@@ -1,4 +1,4 @@
-# DataProcVba by catDev
+# DataProcVBA by catDev
 
 *A modular VBA toolkit for cleaning, normalizing, and transforming messy real-world operational data into structured, usable tables.*
 
