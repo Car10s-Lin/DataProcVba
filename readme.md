@@ -43,6 +43,7 @@ UIControl        (presentation & interaction)
 ### Common
 
 Core utility functions shared across all modules.
+
 Must be loaded before other components.
 
 - ThisWB[PropertyGet]
@@ -83,6 +84,7 @@ Provides filtering and statistical selection tools for extracting relevant subse
 ### TableConstructor
 
 Constructs structured tables using column definitions and primary keys.
+
 Designed for practical use cases where Excel serves as a lightweight data system (~30k rows).
 
 - FillTitle
@@ -115,6 +117,7 @@ Utilities for managing worksheet and userform interactions, including UI cleanup
 ### TMRTStationInfo
 
 Domain-specific station mapping utilities for Taichung Metro operational forms and tables.
+
 This public version includes only non-sensitive, publicly accessible reference data adapted for demonstration purposes.
 
 - GrSta
