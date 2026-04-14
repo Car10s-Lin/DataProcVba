@@ -14,16 +14,46 @@ Basic functions that almost all other subs call. Import on default before import
 - NameToRowIndex
 - NameToColIndex
 - ArrProc
+- UiFreeze
+- AppCalc
+- AppWait
+- EnumToIndex
+- OpenURL
 - NumericEasterEgg
 
-### DataImporting
+### SnapshotManage
 
-Import data from online or local snaps. Recommended to call on events like Workbook_Open or Worksheet_Change to allow updating.
+Import, update, or clear data from online or local snapshots. Recommended to call on events like Workbook_Open or Worksheet_Change to allow updating.
 
 - ImportCsv
 - GSheetLinkParser
 - ListFiles
+- OmisDataImporter
+- OmisDataPurger
+- ClearWs
+- PersonalDataProtection
+- SoloVal
 
-### DataFiltering
-###DataNormalization
-###UXControl
+### DataManipulation
+
+Manipulate data in Range
+
+- AppMatch
+- BulkAutoFilter
+- FillTitle
+- GenSequence
+- GetSn
+- GetWs
+  
+### DataNormalization
+
+- BamaToDate
+- 
+### UIUXControl
+
+- ClearUserForm
+- ColWidthCalib
+- ColWidthRetrive
+- DrawStandardBorders
+
+### TMRTStationInfo
