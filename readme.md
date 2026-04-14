@@ -13,17 +13,29 @@ Instead of treating Excel as a simple spreadsheet tool, this framework approache
 The toolkit is organized into modular layers, each handling a specific stage of the data workflow:
 
 Data Source
+
    ↓
+   
 SnapshotManage   (data ingestion & refresh)
+
    ↓
+   
 DataFilter       (filtering & selection)
+
    ↓
+   
 TableConstructor (table structuring)
+
    ↓
+   
 DataLookup       (reference & matching)
+
    ↓
+   
 DataNormalization (format standardization)
+
    ↓
+   
 UIControl        (presentation & interaction)
 
 ## Framework
