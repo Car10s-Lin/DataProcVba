@@ -156,6 +156,7 @@ Must be loaded before other components.
          - `ipt`: String. Required.
    - Example  
 
+     ```
       arr = Array(3, 1, 2)
 
       arr = ArrProc(arr, , arrSortAscending)
@@ -166,7 +167,8 @@ Must be loaded before other components.
       
       arr = ArrProc(arr, Array(2, 99), arrInsert)
       ' → Array(1, 2, 99, 3, 4)
-     
+     ```
+      
 - `UiFreeze(opt As UiFreezeOption)`
    - Behavior  
       - Toggles Excel application-level UI and calculation settings, including:
