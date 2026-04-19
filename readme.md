@@ -294,8 +294,29 @@ Designed for practical use cases where Excel serves as a lightweight data system
 
 Enhanced lookup utilities that extend beyond built-in VBA functions, offering more flexible and robust matching logic.
 
-- AppMatch
-- `SmartMid`(`inputStr` As String, Optional `start` As Long = 1, Optional `length` As Long = 0)
+- `AppMatch(search As Variant, within As Variant, Optional matchOption As AppMatchOption = matchExactly, Optional xmatchMode As Boolean = False) As Long`
+   - Behavior  
+      - Returns the location (1-based) of first encounter of `search` in `within` like regular `Application.Match`
+      - `matchOption` allows find biggest, smallest, and exactly.
+      - When `xmatchMode = True`, `within` will be turned backwards for starting search from last element.
+      - Returns `-1` if encounters error.
+   - Purpose  
+      - Provides a simple wrapper for `Application.Match`.
+      - Simulates `XMATCH` on older version of Excel
+      - Provides fallback on error for match function. Returns `-1` as sentinel for error finding to allow easy processing.
+   - Parameters  
+      - `search`: Variant. Required. Items to look for in `within`.  
+      - `within`: Variant. Required. 1-D array or range to search within.  
+      - `matchOption`: AppMatchOption. Optional. Match method. Uses `matchExactly` if not assigned.
+         - matchGreater: Search for the smallest value that's greater than `search` 
+         - matchMinor: Search for the biggest value that's minor than `search` 
+         - matchExactly: Search for the exact item same with `search`
+      - `xmatchMode`: Boolean. Optional. When set to `True`, looks for `search` backwards in `within`, then returns the location of first encounter. 
+   - Example  
+      - `SmartMid("ABCDEFG", 3, 2)` → `"CD"`  
+      - `SmartMid("ABCDEFG", 5, -2)` → `"DE"`  
+      - `SmartMid("ABCDEFG", 4, 0)` → `"DEFG"`
+- `SmartMid(inputStr As String, Optional start As Long = 1, Optional length As Long = 0)`
    - Behavior  
       - Returns a substring from `inputStr`, extending VBA's built-in `Mid()` behavior.
       - When `length > 0`, behaves like the standard `Mid()` function.
