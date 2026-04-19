@@ -50,7 +50,7 @@ Must be loaded before other components.
 
 - `ThisWB`[PropertyGet]
    - Behaviour
-      - Return `ThisWorkbook`
+      - Returns `ThisWorkbook`
    - Purpose
       - Provides a shorter alias for `ThisWorkbook` to simplify code readability and reduce repetitive typing.
 - `Today`[PropertyGet]
@@ -58,29 +58,29 @@ Must be loaded before other components.
       - Returns the current system date as a `Date`.
    - Purpose
       - Provides a simplified interface for retrieving the current date, especially for users transitioning from Excel formulas.
-- `LastRow`(`ws` As Worksheet, Optional `indexCol` As Long = `1`, Optional `chaoMode` As Boolean = `False`, Optional `searchForBlank` As Boolean = `False`)
+- `LastRow(ws As Worksheet, Optional indexCol As Long = 1, Optional chaoMode As Boolean = False, Optional searchForBlank As Boolean = False) As Long`
    - Behavior  
       - Returns the last row index of a worksheet.
-      - Mininum result is 1
+      - Mininum result is `1`
    - Purpose  
       - Detects the boundary of data within a worksheet, useful for determining dataset size, locating the next available row for writing, or identifying layout limits in Excel-based documents.
    - Parameters  
       - `ws`: Worksheet. Required. The target worksheet.  
       - `indexCol`: Long. Optional. Column used to determine the last row when `chaoMode = False`. Defaults to column 1.  
       - `chaoMode`: Boolean. Optional. If set to `True`, performs a full worksheet scan and returns the largest row index containing any data. Useful for messy or irregular tables.  
-      - `searchForBlank`: Boolean. Optional. If set to `True`, adds 1 to the result, allowing detection of the first available row for writing.
-- `LastCol`(`ws` As Worksheet, Optional `indexRow` As Long = `1`, Optional `chaoMode` As Boolean = `False`, Optional `searchForBlank` As Boolean = `False`)
+      - `searchForBlank`: Boolean. Optional. If set to `True`, adds `1` to the result, allowing detection of the first available row for writing.
+- `LastCol(ws As Worksheet, Optional indexRow As Long = 1, Optional chaoMode As Boolean = False, Optional searchForBlank As Boolean = False) As Long`
    - Behavior  
       - Returns the last column index of a worksheet.
-      - Mininum result is 1
+      - Mininum result is `1`
    - Purpose  
       - Detects the horizontal boundary of data within a worksheet, useful for determining dataset width, locating the next available column for writing, or identifying layout limits in Excel-based documents.
    - Parameters  
       - `ws`: Worksheet. Required. The target worksheet.  
       - `indexRow`: Long. Optional. Row used to determine the last column when `chaoMode = False`. Defaults to row 1.  
       - `chaoMode`: Boolean. Optional. If set to `True`, performs a full worksheet scan and returns the largest column index containing any data. Useful for messy or irregular tables.  
-      - `searchForBlank`: Boolean. Optional. If set to `True`, adds 1 to the result, allowing detection of the first available column for writing.
-- `NameToRowIndex`(`nm` As String, `ws` As Worksheet, Optional `smart` As Boolean = `True`, Optional `startRow` As Long = `1`, Optional `indexCol` As Long = `1`)
+      - `searchForBlank`: Boolean. Optional. If set to `True`, adds `1` to the result, allowing detection of the first available column for writing.
+- `NameToRowIndex(nm As String, ws As Worksheet, Optional smart As Boolean = True, Optional startRow As Long = 1, Optional indexCol As Long = 1) As Long`
    - Behavior  
       - Returns the row index of `nm` within a specified column.
       - Returns `-1` if `nm` is not found.
@@ -92,7 +92,7 @@ Must be loaded before other components.
       - `smart`: Boolean. Optional. Defaults to `True`. When enabled, performs a fuzzy match using `Like` with wildcard patterns.  
       - `startRow`: Long. Optional. Starting row for the search. Defaults to row 1.  
       - `indexCol`: Long. Optional. Column used for lookup. Defaults to column 1.
-- `NameToColIndex`(`nm` As String, `ws` As Worksheet, Optional `smart` As Boolean = True, Optional `startCol` As Long = 1, Optional `indexRow` As Long = 1)
+- `NameToColIndex(nm As String, ws As Worksheet, Optional smart As Boolean = True, Optional startCol As Long = 1, Optional indexRow As Long = 1) As Long`
    - Behavior  
       - Returns the column index of `nm` within a specified row.
       - Returns `-1` if `nm` is not found.
@@ -104,7 +104,7 @@ Must be loaded before other components.
       - `smart`: Boolean. Optional. Defaults to `True`. When enabled, performs a fuzzy match using `Like` with wildcard patterns.  
       - `startCol`: Long. Optional. Starting column for the search. Defaults to column 1.  
       - `indexRow`: Long. Optional. Row used for lookup. Defaults to row 1.
-- `ArrProc`(`arr` As Variant, Optional `ipt` As Variant, Optional `method` As ArrProcMethod = arrAppend)
+- `ArrProc(arr As Variant, Optional ipt As Variant, Optional method As ArrProcMethod = arrAppend) As Variant`
    - Behavior  
       - Performs array operations based on the specified `method`.
       - Returns the processed array as a variant as a new array.
@@ -167,13 +167,82 @@ Must be loaded before other components.
       arr = ArrProc(arr, Array(2, 99), arrInsert)
       ' → Array(1, 2, 99, 3, 4)
      
-- UiFreeze
-- AppCalc
-- AppWait
-- EnumToIndex
-- OpenURL
-- GetWs
-- `NumericEasterEggs`(`numInput` As Long, Optional `allowVandalism` As Boolean = False)
+- `UiFreeze(opt As UiFreezeOption)`
+   - Behavior  
+      - Toggles Excel application-level UI and calculation settings, including:
+         - `EnableEvents`
+         - `DisplayAlerts`
+         - `ScreenUpdating`
+         - `Calculation`
+         - `StatusBar`
+      - Controlled through `UiFreezeOption` (`uiActivate` / `uiDeactivate`).
+   - Purpose  
+      - Temporarily suspends UI updates and automatic calculations to improve performance and prevent unintended side effects during macro execution.
+      - Particularly useful in workbooks that combine VBA procedures with formula-based calculations.
+   - Notes  
+      - Should be used with care, as disabling application-level settings may affect workbook behavior if not properly restored.
+   - Parameters  
+      - `opt`: UiFreezeOption. Required.  
+         - `uiActivate`: Enables UI and automatic calculation  
+         - `uiDeactivate`: Disables UI updates and switches calculation mode
+- `AppCalc()`
+   - Behavior  
+      - Forces workbook-wide calculation and waits until all calculations are completed.
+   - Purpose  
+      - Ensures data consistency in workbooks that combine VBA procedures with formula-based calculations.
+- `AppWait(Optional waitSec As Long = 0)`
+   - Behavior  
+      - Pauses execution using `Application.Wait` for the specified number of seconds.
+   - Purpose  
+      - Provides a simple wrapper for introducing delays in VBA execution.
+   - Parameters  
+      - `waitSec`: Long. Optional.  
+         - Number of seconds to wait  
+         - If not specified or 0, no delay is applied
+- `EnumToIndex(en As Long, Optional ofst As Long = 0) As Long`
+   - Behavior  
+      - Converts a `2^n`-style enum value into its corresponding index `n`.
+   - Purpose
+      - Enables enum values to be used as array indices or for more readable mapping logic.
+   - Example
+
+     ```
+     Enum fruits
+        fruitApple = 2 ^ 0
+        fruitOrange = 2 ^ 1
+        fruitBanana = 2 ^ 2
+     End Enum
+     
+     Function ReturnFruit(en as fruits) As String
+        Dim a As Array
+        a = Array("apple", "orange", "banana")
+        idx = EnumToIndex(en)
+        ReturnFruit = a(idx)
+     End Function`
+     
+     ' ReturnFruit(fruitOrange) → "orange"
+     ```
+     
+   - Parameters
+      - `en`: Long. Required. Enum value to convert.
+      - `ofst`: Long. Optional. Offset added to the resulting index.
+- `OpenURL(url As String)`
+   - Behavior  
+      - Opens default browser with `url`.
+   - Purpose
+      - Provides a flexible way to trigger external links from VBA, including UserForms and ActiveX controls.
+   - Parameters
+      - `url`: String. Required. Url to be opened.
+- `GetWs(Optional idx As wsIndex = wsNone, Optional wsName As String = "") As Worksheet`
+   - Behavior  
+      - Returns a `Worksheet` object based on either a predefined enum (`wsIndex`) or a worksheet name.
+   - Purpose  
+      - Simplifies worksheet access and reduces repetitive referencing logic in VBA code.
+   - Parameters  
+      - `idx`: wsIndex. Optional. Enum representing a worksheet.  
+         - `wsIndex` must be predefined as a `2^n`-style enum before use.  
+      - `wsName`: String. Optional. Name of the worksheet.
+- `NumericEasterEggs(numInput As Long, Optional allowVandalism As Boolean = False)`
    - Behavior  
       - Triggers hidden numeric easter eggs based on the value of `numInput`.
       - Depending on the input, may display messages, open external URLs, or perform workbook-level modifications.
@@ -183,8 +252,7 @@ Must be loaded before other components.
       - Intended as a non-essential utility and should not be used in production-facing workflows.
    - Parameters  
       - `numInput`: Long. Required. Numeric trigger used to activate a specific easter egg.  
-      - `allowVandalism`: Boolean. Optional. Defaults to `False`.  
-        When set to `True`, enables destructive or workbook-altering behaviors for selected triggers.
+      - `allowVandalism`: Boolean. Optional. Defaults to `False`. When set to `True`, enables destructive or workbook-altering behaviors for selected triggers.
    - Notes  
       - Some triggers are harmless and only display messages or open links.
       - Some triggers may modify workbook content, close the workbook without saving, or alter worksheet formatting when `allowVandalism = True`.
